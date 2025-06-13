@@ -18,20 +18,22 @@ import {
 import styles from './ArticleParamsForm.module.scss';
 import clsx from 'clsx';
 
-type TArticleParamsFormProps = {
-	onApply: (articleState: ArticleStateType) => void;
-	onReset: () => void;
-	initialState: ArticleStateType;
+export type TArticleParamsFormProps = {
+	onChange: React.Dispatch<React.SetStateAction<ArticleStateType>>;
 };
 
-export const ArticleParamsForm = ({
-	onApply,
-	onReset,
-	initialState,
-}: TArticleParamsFormProps) => {
+export const ArticleParamsForm = ({ onChange }: TArticleParamsFormProps) => {
 	const [isSideBarOpen, setIsSideBarOpen] = useState(false);
-	const [formState, setFormState] = useState(initialState);
+	const [formState, setFormState] = useState(defaultArticleState);
 	const asideRef = useRef<HTMLDivElement>(null);
+
+	const handleApplyButton = (newState: ArticleStateType) => {
+		onChange(newState);
+	};
+
+	const handleResetButton = () => {
+		onChange(defaultArticleState);
+	};
 
 	const toggleSideBar = () => {
 		setIsSideBarOpen(!isSideBarOpen);
@@ -64,12 +66,12 @@ export const ArticleParamsForm = ({
 	};
 
 	const handleApply = () => {
-		onApply(formState);
+		handleApplyButton(formState);
 	};
 
 	const handlyReset = () => {
 		setFormState(defaultArticleState);
-		onReset();
+		handleResetButton();
 	};
 
 	return (

@@ -8,15 +8,8 @@ import {
 import styles from './app.module.scss';
 
 export const App = () => {
-	const [articleState, setArticleState] = useState(defaultArticleState);
-
-	const handleApplyButton = (newState: ArticleStateType) => {
-		setArticleState(newState);
-	};
-
-	const handleResetButton = () => {
-		setArticleState(defaultArticleState);
-	};
+	const [articleState, setArticleState] =
+		useState<ArticleStateType>(defaultArticleState);
 
 	return (
 		<main
@@ -30,11 +23,7 @@ export const App = () => {
 					'--bg-color': articleState.backgroundColor.value,
 				} as React.CSSProperties
 			}>
-			<ArticleParamsForm
-				onApply={handleApplyButton}
-				onReset={handleResetButton}
-				initialState={articleState}
-			/>
+			<ArticleParamsForm onChange={setArticleState} />
 			<Article />
 		</main>
 	);
